@@ -1,0 +1,37 @@
+<%= simple_form_for @course, html: { class: 'form-horizontal' } do |f| %>
+  <div class="mb-3">
+    <%= f.input :title, label: 'Course Title', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :description, label: 'Description', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :thumbnail, label: 'Thumbnail', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :max_capacity, label: 'Max Capacity', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :start_date, as: :date, label: 'Start Date', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :end_date, as: :date, label: 'End Date', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :schedule, label: 'Schedule', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.input :category, label: 'Category', input_html: { class: 'form-control' }, label_html: { class: 'form-label' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.submit 'Save Course', class: 'btn btn-primary' %>
+  </div>
+<% end %>

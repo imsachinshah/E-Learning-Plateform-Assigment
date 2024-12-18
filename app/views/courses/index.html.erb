@@ -1,0 +1,40 @@
+<div class="mb-4">
+  <h1>Discover Courses</h1>
+  <%= form_with url: courses_path, method: :get, class: "row g-3", local: true do |f| %>
+    <div class="col-md-3">
+      <%= f.text_field :name, class: "form-control", placeholder: "Course name", value: params[:name] %>
+    </div>
+    <div class="col-md-3">
+      <%= f.text_field :category, class: "form-control", placeholder: "Category", value: params[:category] %>
+    </div>
+    <div class="col-md-3">
+      <%= f.text_field :instructor, class: "form-control", placeholder: "Instructor", value: params[:instructor] %>
+    </div>
+    <div class="col-md-3">
+      <%= f.submit "Search", class: "btn btn-primary w-100" %>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? && current_user.instructor? %>
+    <div class="mt-4">
+      <%= link_to 'Create Course', new_course_path, class: 'btn btn-success btn-lg' %>
+    </div>
+  <% end %> 
+</div>
+
+<div class="row">
+  <% @courses.each do |course| %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="<%= url_for(course.thumbnail) %>" class="card-img-top" alt="Course Thumbnail">
+        <div class="card-body">
+          <h5 class="card-title"><%= course.title %></h5>
+          <p class="card-text"><%= course.description.truncate(100) %></p>
+          <p><strong>Seats Available:</strong> <%= course.max_capacity - course.enrollments.count %></p>
+          <p class="card-text"><%= course.category.humanize %></p>
+          <%= link_to 'View Details', course_path(course), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

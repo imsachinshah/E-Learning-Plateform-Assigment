@@ -1,0 +1,14 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+      <h1 class="display-4 mb-4">Welcome to E-Learning Plateform</h1>
+      
+      <% if user_signed_in? %>
+        <p class="lead">You are logged in as <%= current_user.email %>!</p>
+        <%= link_to 'Go to Courses', courses_path, class: 'btn btn-primary btn-lg' %>
+      <% else %>
+        <p class="lead">Please log in or sign up to access the courses.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

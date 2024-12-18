@@ -1,0 +1,47 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="card-title"><%= @course.title %></h2>
+    <img src="<%= url_for(@course.thumbnail) %>" class="card-img-top" alt="Course Thumbnail" height="800px">
+    <p><strong>Instructor:</strong> <%= @course.user.email %></p>
+    <p><strong>Description:</strong> <%= @course.description %></p>
+    <p><strong>Schedule:</strong> <%= @course.schedule %></p>
+    <p><strong>Seats Available:</strong> <%= @course.max_capacity - @course.enrollments.count %></p>
+    <% if current_user.student? && (@course.max_capacity - @course.enrollments.count > 0) %>
+      <%= button_to 'Enroll', enroll_course_path(@course), method: :post, class: 'btn btn-success' %>
+    <% elsif current_user.instructor? %>
+      <h4>Enrolled Students:</h4>
+      <ol type="1">
+	      <% @course.enrollments.each do |enrollment| %>
+	        <li><%= enrollment.user.email %></li>
+	      <% end %>
+	  </ol>
+    <% else %>
+      <p class="text-danger">Enrollment not available.</p>
+    <% end %>
+  </div>
+</div>
+
+<h3>Reviews</h3>
+<div class="list-group mb-4">
+  <% @course.reviews.each do |review| %>
+    <div class="list-group-item">
+      <p><strong>Rating:</strong> <%= review.rating %> / 5</p>
+      <p><%= review.comment %></p>
+    </div>
+  <% end %>
+</div>
+
+<% if current_user.student? %>
+  <h4>Add a Review</h4>
+  <%= form_with(model: [@course, Review.new], local: true, class: 'mb-4') do |f| %>
+    <div class="mb-3">
+      <%= f.label :rating, 'Rating (1-5)', class: 'form-label' %>
+      <%= f.number_field :rating, in: 1..5, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :comment, 'Comment', class: 'form-label' %>
+      <%= f.text_area :comment, class: 'form-control' %>
+    </div>
+    <%= f.submit 'Submit Review', class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
